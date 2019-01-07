@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Custom build for Docker Hub
+# see: https://medium.com/microscaling-systems/labelling-automated-builds-on-docker-hub-f3d073fb8e1
+
+docker run \
+  --rm \
+  --name $USER-${DOCKER_IMAGE_NAME} \
+  --hostname $USER-${DOCKER_IMAGE_NAME} \
+  --interactive \
+  --tty \
+  --entrypoint '' \
+  --publish 8080:8000 \
+  ${DOCKER_NAME_SPACE}/${DOCKER_IMAGE_NAME}:${DOCKER_VERSION} \
+  /bin/bash
