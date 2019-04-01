@@ -12,6 +12,8 @@ services:
         - BUILD_VERSION
         - BUILD_TYPE
         - PAPERLESS_VERSION
+    container_name: paperless_consumer
+    hostname: paperless_consumer
     # uncomment the following line to start automatically on system boot
     # restart: always
     depends_on:

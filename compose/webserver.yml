@@ -11,6 +11,8 @@ services:
         - BUILD_VERSION
         - BUILD_TYPE
         - PAPERLESS_VERSION
+    container_name: paperless_web
+    hostname: paperless_web
     # uncomment the following line to start automatically on system boot
     # restart: always
     ports:
