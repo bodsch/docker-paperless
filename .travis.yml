@@ -1,0 +1,25 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+    - PAPERLESS_VERSION=${PAPERLESS_VERSION:-2.7.0}
+    - BUILD_DATE=$(date +"%Y-%m-%d")
+    - BUILD_TYPE=stable
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - make build
+
+    - stage: build and test
+      script:
+        - make compose-file
+        - docker-compose build
+        - docker-compose up -d
+        - docker ps | grep -q paperless
+        - docker-compose kill
+        - docker-compose down

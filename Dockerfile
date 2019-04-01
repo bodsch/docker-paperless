@@ -13,6 +13,9 @@ ENV \
   PAPERLESS_EXPORT_DIR=/export \
   PAPERLESS_CONSUMPTION_DIR=/consume
 
+# ---------------------------------------------------------------------------------------
+
+# hadolint ignore=DL3003,DL3008,DL3013,DL3014,DL3015,DL3017,DL3018,DL3019
 RUN \
   apk update  --quiet && \
   apk upgrade --quiet && \
@@ -43,9 +46,9 @@ RUN \
     zlib-dev \
     jpeg-dev \
     git && \
-  cp /usr/share/zoneinfo/${TZ} /etc/localtime && \
-  echo ${TZ} > /etc/timezone && \
-  mkdir -p ${PAPERLESS_HOME} && \
+  cp "/usr/share/zoneinfo/${TZ}" /etc/localtime && \
+  echo "${TZ}" > /etc/timezone && \
+  mkdir -p "${PAPERLESS_HOME}" && \
   addgroup \
     -g 1000 \
     paperless && \
@@ -53,18 +56,18 @@ RUN \
     -D \
     -u 1000 \
     -G paperless \
-    -h ${PAPERLESS_HOME} \
+    -h "${PAPERLESS_HOME}" \
     paperless && \
   chown \
     -Rh \
     paperless:paperless \
-    ${PAPERLESS_HOME} && \
+    "${PAPERLESS_HOME}" && \
   cd /tmp && \
   git clone https://github.com/danielquinn/paperless.git && \
   cd /tmp/paperless && \
   if [[ "${BUILD_TYPE}" = "stable" ]] ; then \
     echo "switch to stable Tag ${PAPERLESS_VERSION}" && \
-    git checkout tags/${PAPERLESS_VERSION} 2> /dev/null ; \
+    git checkout tags/"${PAPERLESS_VERSION}" 2> /dev/null ; \
   fi && \
   pip3 install \
     --quiet \
@@ -73,12 +76,12 @@ RUN \
   pip3 install \
     --quiet \
     --requirement /tmp/paperless/requirements.txt && \
-  cp -ar /tmp/paperless/src   ${PAPERLESS_HOME}/ && \
-  cp -ar /tmp/paperless/data  ${PAPERLESS_HOME}/ && \
-  cp -ar /tmp/paperless/media ${PAPERLESS_HOME}/ && \
+  cp -ar /tmp/paperless/src   "${PAPERLESS_HOME}"/ && \
+  cp -ar /tmp/paperless/data  "${PAPERLESS_HOME}"/ && \
+  cp -ar /tmp/paperless/media "${PAPERLESS_HOME}"/ && \
   mkdir -p \
-    ${PAPERLESS_CONSUMPTION_DIR} \
-    ${PAPERLESS_EXPORT_DIR} && \
+    "${PAPERLESS_CONSUMPTION_DIR}" \
+    "${PAPERLESS_EXPORT_DIR}" && \
   apk del --quiet .build-dependencies && \
   rm -rf \
     /build \
@@ -88,18 +91,19 @@ RUN \
 
 COPY rootfs /
 
-WORKDIR ${PAPERLESS_HOME}
-USER paperless
+#WORKDIR ${PAPERLESS_HOME}
+#USER paperless
 
 VOLUME ["${PAPERLESS_HOME}/data", "${PAPERLESS_HOME}/media", "${PAPERLESS_CONSUMPTION_DIR}", "${PAPERLESS_EXPORT_DIR}"]
 ENTRYPOINT ["/init/run.sh"]
 CMD ["--help"]
 
 HEALTHCHECK \
-  --interval=5s \
+  --interval=30s \
   --timeout=2s \
-  --retries=12 \
-  CMD curl --silent --fail http://localhost:8000 || exit 1
+  --retries=10 \
+  --start-period=15s \
+  CMD /init/healthcheck.sh
 
 # ---------------------------------------------------------------------------------------
 

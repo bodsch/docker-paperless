@@ -25,9 +25,9 @@ compose-file:
 	@hooks/compose-file
 
 linter:
-	@test/linter.sh
+	@tests/linter.sh
 
 integration_test:
-	@test/integration_test.sh
+	@tests/integration_test.sh
 
 test: linter integration_test
