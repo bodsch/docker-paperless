@@ -91,8 +91,8 @@ RUN \
 
 COPY rootfs /
 
-#WORKDIR ${PAPERLESS_HOME}
-#USER paperless
+WORKDIR ${PAPERLESS_HOME}
+USER paperless
 
 VOLUME ["${PAPERLESS_HOME}/data", "${PAPERLESS_HOME}/media", "${PAPERLESS_CONSUMPTION_DIR}", "${PAPERLESS_EXPORT_DIR}"]
 ENTRYPOINT ["/init/run.sh"]
@@ -107,7 +107,8 @@ HEALTHCHECK \
 
 # ---------------------------------------------------------------------------------------
 
-# Build-time metadata as defined at http://label-schema.org
+EXPOSE 8000
+
 LABEL \
   version=${BUILD_VERSION} \
   maintainer="Bodo Schulz <bodo@boone-schulz.de>" \

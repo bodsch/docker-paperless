@@ -5,24 +5,13 @@
 
 [[ -e hooks/environment ]] && . hooks/environment
 
-set -x
-
 cat << EOF > .env
 
 BUILD_DATE=${BUILD_DATE}
 BUILD_VERSION=${BUILD_VERSION}
 PAPERLESS_VERSION=${PAPERLESS_VERSION}
 
-
 EOF
-
-#PAPERLESS_VERSION=2.6.0
-#
-#echo "VCS_REF=${GIT_SHA1}" > .env
-#echo "BUILD_DATE=${BUILD_DATE}" >> .env
-#echo "BUILD_VERSION=${BUILD_VERSION}" >> .env
-#echo "BUILD_TYPE=stable" >> .env
-#echo "PAPERLESS_VERSION=${PAPERLESS_VERSION}" >> .env
 
 cp docker-compose_example.env compose/docker-compose.env
 

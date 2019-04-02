@@ -1,26 +1,18 @@
 #!/bin/bash
 
-consumer=$(ps ax -o pid,args | grep -v grep | egrep -c document_consumer)
-runserver=$(ps ax -o pid,args | grep -v grep | egrep -c runserver)
+consumer=$(pgrep -f document_consumer)
+runserver=$(pgrep -f runserver)
 
 if [ ${consumer} -eq 1 ] && [ ${runserver} -eq 0 ]
 then
   exit 0
 
 else
-  curl_opts="--silent --fail"
-
-  if curl ${curl_opts} http://localhost:8000
+  if curl --silent --fail http://localhost:8000/admin/
   then
-    # validation are not successful
-    #
-    if [[ $? -gt 0 ]]
-    then
-      exit 1
-    fi
-
-    exit 0
+    exit 1
   fi
+  exit 0
 fi
 
 exit 2

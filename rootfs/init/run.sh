@@ -1,13 +1,13 @@
 #!/bin/bash
+
 set -e
-
-
 
 # Source: https://github.com/sameersbn/docker-gitlab/
 map_uidgid() {
+
   USERMAP_ORIG_UID=$(id -u paperless)
   USERMAP_ORIG_GID=$(id -g paperless)
-  USERMAP_NEW_UID=${USERMAP_UID:-$USERMAP_ORIG_UID}
+  USERMAP_NEW_UID=${USERMAP_UID:-${USERMAP_ORIG_UID}}
   USERMAP_NEW_GID=${USERMAP_GID:-${USERMAP_ORIG_GID:-$USERMAP_NEW_UID}}
 
   if [[ ${USERMAP_NEW_UID} != "${USERMAP_ORIG_UID}" || ${USERMAP_NEW_GID} != "${USERMAP_ORIG_GID}" ]]
@@ -46,7 +46,7 @@ set_permissions() {
   done
 
   # Set permissions for application directory
-  chown -Rh paperless:paperless ${PAPERLESS_HOME}
+  chown -Rh paperless:paperless "${PAPERLESS_HOME}"
 }
 
 migrations() {
@@ -58,7 +58,7 @@ migrations() {
   then
     trap 'rm -f "${LOCKFILE}"; exit $?' INT TERM EXIT
     sudo -HEu paperless "${PAPERLESS_HOME}/src/manage.py" "migrate"
-    rm ${LOCKFILE}
+    rm "${LOCKFILE}"
   fi
 }
 

@@ -1,6 +1,13 @@
 #!/bin/bash
 
+ui_request() {
 
+  curl \
+    --silent \
+    --head \
+    --location \
+    http://localhost:8080/admin/
+}
 
 inspect() {
 
@@ -14,7 +21,10 @@ inspect() {
 
     printf "%-40s - %s\n"  "${c}" "${s}"
   done
+  echo ""
 }
 
 inspect
+ui_request
 
+exit 0
