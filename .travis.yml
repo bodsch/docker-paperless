@@ -20,6 +20,7 @@ jobs:
         - make compose-file
         - docker-compose build
         - docker-compose up -d
-        - docker ps | grep -q paperless
+        - sleep 8s
+        - make test
         - docker-compose kill
         - docker-compose down
