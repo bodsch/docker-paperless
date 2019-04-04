@@ -20,7 +20,7 @@ jobs:
         - make compose-file
         - docker-compose build
         - docker-compose up -d
-        - sleep 8s
+        - sleep 15s
         - make test
         - docker-compose kill
         - docker-compose down

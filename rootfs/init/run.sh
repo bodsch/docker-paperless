@@ -110,7 +110,7 @@ then
   #  install_languages "$PAPERLESS_OCR_LANGUAGES"
   #fi
 
-  exec sudo -HEu paperless "${PAPERLESS_HOME}/src/manage.py" "$@"
+  exec sudo --set-home --preserve-env --user=paperless "${PAPERLESS_HOME}/src/manage.py" "$@"
 fi
 
 exec "$@"

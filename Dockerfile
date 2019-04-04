@@ -58,10 +58,6 @@ RUN \
     -G paperless \
     -h "${PAPERLESS_HOME}" \
     paperless && \
-  chown \
-    -Rh \
-    paperless:paperless \
-    "${PAPERLESS_HOME}" && \
   cd /tmp && \
   git clone https://github.com/danielquinn/paperless.git && \
   cd /tmp/paperless && \
@@ -74,7 +70,6 @@ RUN \
     --upgrade \
     pip && \
   pip3 install \
-    --quiet \
     --requirement /tmp/paperless/requirements.txt && \
   cp -ar /tmp/paperless/src   "${PAPERLESS_HOME}"/ && \
   cp -ar /tmp/paperless/data  "${PAPERLESS_HOME}"/ && \
@@ -82,6 +77,10 @@ RUN \
   mkdir -p \
     "${PAPERLESS_CONSUMPTION_DIR}" \
     "${PAPERLESS_EXPORT_DIR}" && \
+  chown \
+    -Rh \
+    paperless:paperless \
+    "${PAPERLESS_HOME}" && \
   apk del --quiet .build-dependencies && \
   rm -rf \
     /build \
@@ -92,7 +91,7 @@ RUN \
 COPY rootfs /
 
 WORKDIR ${PAPERLESS_HOME}
-USER paperless
+# USER paperless
 
 VOLUME ["${PAPERLESS_HOME}/data", "${PAPERLESS_HOME}/media", "${PAPERLESS_CONSUMPTION_DIR}", "${PAPERLESS_EXPORT_DIR}"]
 ENTRYPOINT ["/init/run.sh"]
