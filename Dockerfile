@@ -61,7 +61,7 @@ RUN \
   cd /tmp && \
   git clone https://github.com/danielquinn/paperless.git && \
   cd /tmp/paperless && \
-  if [[ "${BUILD_TYPE}" = "stable" ]] ; then \
+  if [ "${BUILD_TYPE}" = "stable" ] ; then \
     echo "switch to stable Tag ${PAPERLESS_VERSION}" && \
     git checkout tags/"${PAPERLESS_VERSION}" 2> /dev/null ; \
   fi && \
