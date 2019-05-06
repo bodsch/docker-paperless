@@ -1,26 +1,23 @@
 sudo: required
-
 services:
-  - docker
-
+- docker
 env:
   global:
-    - PAPERLESS_VERSION=${PAPERLESS_VERSION:-2.7.0}
-    - BUILD_DATE=$(date +"%Y-%m-%d")
-    - BUILD_TYPE=stable
-
+  - PAPERLESS_VERSION=${PAPERLESS_VERSION:-2.7.0}
+  - BUILD_DATE=$(date +"%Y-%m-%d")
+  - BUILD_TYPE=stable
+  - secure: AdO6zTQg1jEb4GylPDRAHv2KTD6TUkHYRkGPAOOf6WwxAGOrlKErkMnSa728HQOibIH5vcaELFi6oy5V7/AioUNhIaCbmUz9m8txtGKSPd/CMeVkmonyRLZHt8CBCR2cBUxqCc6CzjXrp+mxUCNL1IjrCtTMwizdfYnZ3//g4+/8v7DK4OiFPLdET+lSmhSIYm6/Qi4Xmb/ICIE4mI48XpW0a1VBBhijA/+VJJiBLoWofuPqG3stOgBohttOoiOz126qdD87mpu9mFGq6CAZw2qUxb9T/2niILI/4WID9Cwlgaf1ZQpaQBgi3plbE2swadUTKpLsS0Q72tdld7an19U+xGqvNDqMMEemVBVKKFz6G/sDCftOunZjIS5dbJciw9W6kYqOgDhf5HaC2LH9gJ2CoqH8j8PVdQZoag1PmfuOyIanG0Uz3+KrrcfUfj2KfBpEiLbgM3fFBkfGR9TowKi+GXzPh0LA89kyt8A155i+Z0yyje1B2HXRIyhGRFKBmdp/Gy2+58qA3Ljs3W/H9Mm5N1sgo1+YUISO4LLQQZongsuz3l6BueNB6p81xLSZT2T7YknoE1DWHsQQTs2BD1PhNFC/sgxWxHvxHbFP/cJ2X3CzdxzHjDS4AVYkYcyt1RvCghL94D088CL2Z2wqZ6eD2hyO43Q5EAT7VMBv3PE=
 jobs:
   include:
-    - stage: build
-      script:
-        - make build
-
-    - stage: build and test
-      script:
-        - make compose-file
-        - docker-compose build
-        - docker-compose up -d
-        - sleep 15s
-        - make test
-        - docker-compose kill
-        - docker-compose down
+  - stage: build
+    script:
+    - make build
+  - stage: build and test
+    script:
+    - make compose-file
+    - docker-compose build
+    - docker-compose up -d
+    - sleep 15s
+    - make test
+    - docker-compose kill
+    - docker-compose down
