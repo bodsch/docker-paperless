@@ -11,7 +11,7 @@ jobs:
   include:
   - stage: build
     script:
-    - make build
+    - make
   - stage: build and test
     script:
     - make compose-file
@@ -21,3 +21,12 @@ jobs:
     - make test
     - docker-compose kill
     - docker-compose down
+  - stage: build and push docker image
+    script:
+    - make
+    - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+    - docker tag  ${USER}/paperless:latest ${DOCKER_USERNAME}/docker-paperless:${PAPERLESS_VERSION}
+    - docker push ${DOCKER_USERNAME}/docker-paperless:${PAPERLESS_VERSION}
+    - docker tag  ${DOCKER_USERNAME}/docker-paperless:${PAPERLESS_VERSION} ${DOCKER_USERNAME}/docker-paperless:latest
+    - docker push ${DOCKER_USERNAME}/docker-paperless:latest
+    - docker logout
