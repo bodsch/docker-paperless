@@ -20,8 +20,8 @@ services:
       webserver:
         condition: service_healthy
     volumes:
-      - data:/usr/src/paperless/data
-      - media:/usr/src/paperless/media
+      - data:${PAPERLESS_HOME}/data
+      - media:${PAPERLESS_HOME}/media
       # This should be set to the same value as the consume directory
       # in the webserver service above.
       - ./consume:/consume

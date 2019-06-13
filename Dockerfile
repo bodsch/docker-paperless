@@ -101,7 +101,7 @@ HEALTHCHECK \
   --interval=30s \
   --timeout=2s \
   --retries=10 \
-  --start-period=15s \
+  --start-period=10s \
   CMD /init/healthcheck.sh
 
 # ---------------------------------------------------------------------------------------

@@ -11,6 +11,7 @@ BUILD_DATE=${BUILD_DATE}
 BUILD_VERSION=${BUILD_VERSION}
 PAPERLESS_VERSION=${PAPERLESS_VERSION}
 
+PAPERLESS_HOME=/opt/paperless
 EOF
 
 cp docker-compose_example.env compose/docker-compose.env
