@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.10
 
 ARG VCS_REF
 ARG BUILD_DATE
@@ -27,6 +27,7 @@ RUN \
     bash \
     curl \
     sudo \
+    shadow \
     poppler \
     tesseract-ocr \
     tesseract-ocr-data-deu \
@@ -41,7 +42,6 @@ RUN \
     gcc \
     g++ \
     musl-dev \
-    shadow \
     tzdata \
     zlib-dev \
     jpeg-dev \
